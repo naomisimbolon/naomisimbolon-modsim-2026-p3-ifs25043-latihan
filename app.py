@@ -1,3 +1,8 @@
+# ============================
+# main.py - Simulasi Piket IT Del (FIXED)
+# ============================
+
+# 1. IMPORT LIBRARY
 import streamlit as st
 import simpy
 import random
@@ -8,9 +13,14 @@ from dataclasses import dataclass
 import plotly.express as px
 import plotly.graph_objects as go
 
-# ============================
-# CUSTOM CSS - BACKGROUND UNIQUE
-# ============================
+# 2. ✅ SET PAGE CONFIG - HARUS STREAMLIT COMMAND PERTAMA!
+st.set_page_config(
+    page_title="Simulasi Piket IT Del",
+    page_icon="⏱️",
+    layout="wide"
+)
+
+# 3. ✅ CUSTOM CSS - BOLEH SETELAH set_page_config
 st.markdown("""
 <style>
 /* Background utama dengan gradient unik */
@@ -156,7 +166,7 @@ summary {
 # ============================
 @dataclass
 class Config:
-    """Konfigurasi parameter simulasi piket IT Del """
+    """Konfigurasi parameter simulasi piket IT Del"""
     
     NUM_MEJA: int = 60
     MAHASISWA_PER_MEJA: int = 3
@@ -374,14 +384,15 @@ class SistemPiketITDel:
 # ============================
 def create_timeline_chart(df):
     """Buat timeline penyelesaian per jam"""
-    if df.empty:
+    if df is None or df.empty:
         return None
     
-    df['jam'] = df['jam_selesai'].dt.hour
-    df['menit'] = df['jam_selesai'].dt.minute
-    df['waktu_label'] = df['jam'].astype(str) + ':' + df['menit'].astype(str).str.zfill(2)
+    df_copy = df.copy()
+    df_copy['jam'] = df_copy['jam_selesai'].dt.hour
+    df_copy['menit'] = df_copy['jam_selesai'].dt.minute
+    df_copy['waktu_label'] = df_copy['jam'].astype(str) + ':' + df_copy['menit'].astype(str).str.zfill(2)
     
-    hourly = df['waktu_label'].value_counts().sort_index()
+    hourly = df_copy['waktu_label'].value_counts().sort_index()
     
     fig = px.bar(
         x=hourly.index,
@@ -494,14 +505,10 @@ def create_wait_time_chart(model):
     return fig
 
 # ============================
-# APLIKASI STREAMLIT
+# APLIKASI STREAMLIT - FUNGSI MAIN
 # ============================
 def main():
-    st.set_page_config(
-        page_title="Simulasi Piket IT Del",
-        page_icon="⏱️",
-        layout="wide"
-    )
+    # ❌ JANGAN panggil st.set_page_config() di sini lagi! Sudah di atas.
     
     st.title("⏱️ Simulasi Sistem Piket IT Del")
     st.markdown("""
@@ -719,6 +726,8 @@ def main():
     st.markdown("---")
     st.caption(f"📌 Simulasi Piket IT Del - 7 Orang | {datetime.now().strftime('%d/%m/%Y')}")
 
+# ============================
+# ENTRY POINT
+# ============================
 if __name__ == "__main__":
     main()
-    
