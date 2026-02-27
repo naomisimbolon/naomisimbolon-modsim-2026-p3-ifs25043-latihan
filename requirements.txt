@@ -1,0 +1,31 @@
+# ============================================
+# Requirements for Simulasi Piket Kantin IT Del
+# ============================================
+# Python Version: 3.8+ recommended
+# Install: pip install -r requirements.txt
+# ============================================
+
+# Web Application Framework
+streamlit==1.32.0
+
+# Discrete Event Simulation
+simpy==4.1.1
+
+# Data Science & Numerical Computing
+numpy==1.26.4
+pandas==2.2.1
+
+# Interactive Visualizations
+plotly==5.20.0
+
+# Optional: Additional utilities (uncomment if needed)
+# seaborn==0.13.2          # Untuk visualisasi statis tambahan
+# matplotlib==3.8.3        # Untuk plotting dasar
+# scipy==1.12.0            # Untuk fungsi statistik lanjutan
+
+# ============================================
+# Catatan:
+# - Versi di atas sudah diuji dan kompatibel
+# - Untuk versi terbaru, hapus "==x.x.x"
+# - Pastikan Python >= 3.8 untuk dataclasses
+# ============================================
